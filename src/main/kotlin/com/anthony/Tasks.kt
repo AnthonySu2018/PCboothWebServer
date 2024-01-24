@@ -1,4 +1,5 @@
 package com.anthony
 
-class Tasks {
-}
+import java.time.LocalDateTime
+
+data class Tasks(val task: String, val localDateTimeSubstring: String)

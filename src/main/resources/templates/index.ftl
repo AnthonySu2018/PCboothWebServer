@@ -1,8 +1,22 @@
 <html>
+<head>
+    <title>Anthony's design</title>
+</head>
 <body>
-<h1>Items:</h1>
-<#list data.items as item>
-    <h2>The item at index ${item?index} is ${item}</h2>
-</#list>
+
+<h3>Please click below button send tasks to all laptops.</h3>
+<#--<#list TaskList.items as item>
+    <button>${item}</button>
+</#list>-->
+<a href="http://localhost:8080/noTask"> Set all laptops' task to noTask.</a><br/><br/>
+<a href="http://localhost:8080/shutdown"> Set all laptops' task to shutdown.</a><br/><br/>
+<a href="http://localhost:8080/reboot"> Set all laptops' task to reboot.</a><br/><br/>
+
+
+<h2>Now all laptops' task are : </h2>
+<h2 style="color: red">${Tasks.task}</h2>
+<h3>Tasks send out time is :${Tasks.localDateTimeSubstring} </h3>
+
+
 </body>
 </html>
