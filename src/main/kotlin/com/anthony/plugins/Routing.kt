@@ -1,19 +1,31 @@
 package com.anthony.plugins
 
 import com.anthony.Connection
-import com.anthony.Tasks
+import com.anthony.TaskList
+import com.sioux.anthony.androidapp.homepage.sendUDP
 import freemarker.cache.ClassTemplateLoader
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.freemarker.*
+import io.ktor.server.html.*
 import io.ktor.server.http.content.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import kotlinx.html.body
+import kotlinx.html.h1
+import kotlinx.html.title
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.LinkedHashSet
+import io.ktor.server.application.*
+import io.ktor.server.html.*
+import io.ktor.http.*
+import io.ktor.http.content.*
+import io.ktor.server.routing.*
+import kotlinx.html.*
 
 
 fun Application.configureRouting() {
@@ -28,6 +40,9 @@ fun Application.configureRouting() {
         templateLoader = ClassTemplateLoader(this::class.java.classLoader,
             "templates")
     }
+
+
+
 
     routing {
         val connections = Collections.synchronizedSet<Connection?>(LinkedHashSet())
@@ -55,10 +70,121 @@ fun Application.configureRouting() {
             }
         }
 
-        get("/") {
-            call.respond(FreeMarkerContent("index.ftl",
-                mapOf("Tasks" to Tasks(task, LocalDateTime.now().toString().substring(0,19)))))
+
+        get("/"){
+
+            call.respondHtml(HttpStatusCode.OK){
+                head {
+                    title {
+                        +"Anthony's design"
+                    }
+                }
+                body {
+                    h1{+"This web server is design by Anthony"}
+                    h2{+"Data:2024-02-06"}
+                    h2{+"Version:2.1.0"}
+                    a("http://172.18.1.232:50000/pcbooth"){+"PCbooth Dashboard"}
+                    br{}
+                    br{}
+                    a("http://172.18.1.232:50000/ChangePicture"){+"ChangePicture Dashboard"}
+                    br{}
+                    br{}
+                    a("http://172.18.1.232:50000/PowerSupply"){+"PowerSupply Dashboard"}
+                }
+            }
         }
+
+
+        get("/sample"){
+
+            call.respondHtml(HttpStatusCode.OK){
+                head {
+                    title {
+                        +"Anthony's design"
+                    }
+                }
+                body {
+
+
+                }
+            }
+        }
+
+        get("/ChangePicture"){
+
+            call.respondHtml(HttpStatusCode.OK){
+                head {
+                    title {
+                        +"ChangePicture"
+                    }
+                }
+                body {
+                    h1{+"更换图片后，重启播放盒子"}
+                    a("http://172.18.1.232:50000/rebootPrefaceHallBigScreen"){+"重启序厅LCD大屏"}
+                    br{}
+                    br{}
+                    a("http://172.18.1.232:50000/rebootPrefaceHallSmallScreen"){+"重启序厅工控屏"}
+                    br{}
+                    br{}
+                    a("http://172.18.1.232:50000/rebootBackdoorOuterScreen"){+"重启后面厅外大屏"}
+
+                }
+            }
+        }
+
+        get("/rebootPrefaceHallBigScreen") {
+            val remoteIP = "172.18.0.33"
+            val remotePort = 50505
+            val action = "172.18.0.33MRWETEND"
+            sendUDP(remoteIP,remotePort,action)
+            call.respondRedirect("/ChangePicture")
+        }
+
+        get("/rebootPrefaceHallSmallScreen") {
+            val remoteIP = "172.18.0.10"
+            val remotePort = 50505
+            val action = "172.18.0.10MRWETEND"
+            sendUDP(remoteIP,remotePort,action)
+            call.respondRedirect("/ChangePicture")
+        }
+
+        get("/rebootBackdoorOuterScreen") {
+            val remoteIP = "172.18.0.38"
+            val remotePort = 50505
+            val action = "172.18.0.38MRWETEND"
+            sendUDP(remoteIP,remotePort,action)
+            call.respondRedirect("/ChangePicture")
+        }
+
+
+
+
+        get("/PowerSupply"){
+
+            call.respondHtml(HttpStatusCode.OK){
+                head {
+                    title {
+                        +"PowerSupply"
+                    }
+                }
+                body {
+                    h1{+"展厅电源控制"}
+
+
+                }
+            }
+        }
+
+
+
+
+
+        get("/pcbooth") {
+            call.respond(FreeMarkerContent("pcbooth.ftl",
+                mapOf("TaskList" to TaskList(task, LocalDateTime.now().toString().substring(0,19)))))
+        }
+
+
         get("/task") {
             call.respondText(task)
         }
@@ -68,7 +194,7 @@ fun Application.configureRouting() {
             connections.forEach {
                 it.session.send(task)
             }
-            call.respondRedirect("/")
+            call.respondRedirect("/pcbooth")
         }
 
         get("/reboot") {
@@ -76,7 +202,7 @@ fun Application.configureRouting() {
             connections.forEach {
                 it.session.send(task)
             }
-            call.respondRedirect("/")
+            call.respondRedirect("/pcbooth")
         }
 
 
@@ -85,7 +211,7 @@ fun Application.configureRouting() {
             connections.forEach {
                 it.session.send(task)
             }
-            call.respondRedirect("/")
+            call.respondRedirect("/pcbooth")
         }
 
 

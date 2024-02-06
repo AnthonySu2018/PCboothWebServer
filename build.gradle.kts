@@ -35,6 +35,7 @@ dependencies {
     implementation("io.ktor:ktor-server-freemarker-jvm")
     implementation("io.ktor:ktor-server-host-common-jvm")
     implementation("io.ktor:ktor-server-tomcat-jvm")
+    implementation("io.ktor:ktor-server-html-builder:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
