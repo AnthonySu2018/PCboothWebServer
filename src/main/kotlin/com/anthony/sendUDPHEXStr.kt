@@ -6,8 +6,6 @@ import com.anthony.hexStringToByteArray
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.io.BufferedReader
-import java.io.IOError
 import java.io.IOException
 import java.net.DatagramPacket
 import java.net.DatagramSocket
@@ -15,7 +13,7 @@ import java.net.InetAddress
 
 
 
-fun sendUDPHEX(remoteHost:String,remotePort:Int,action:String){
+fun sendUDPHEXStr(remoteHost:String,remotePort:Int,action:String){
     println("sendUDPHEX函数被调用")
     val socket = DatagramSocket()
 
@@ -54,25 +52,6 @@ fun sendUDPHEX(remoteHost:String,remotePort:Int,action:String){
     }finally{
         socket.close();
     }
-
-
-    /*
-
-        val ipObject= InetAddress.getByName(remoteHost)
-        Log.d("button", ipObject.hostAddress)
-
-        Log.d("button", remotePort.toString())
-
-        val bytes = action.toByteArray()
-
-        val stringBuilder = StringBuilder()
-        for(i in bytes.indices){stringBuilder.append(bytes[i])}
-        Log.d("button", stringBuilder.toString())
-    */
-
-
-
-
 
 
 }

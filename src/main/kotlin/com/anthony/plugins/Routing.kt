@@ -81,7 +81,7 @@ fun Application.configureRouting() {
                 body {
                     h1{+"This web server is design by Anthony"}
                     h2{+"Data:2024-02-18"}
-                    h2{+"Version:2.1.1"}
+                    h2{+"Version:2.2.0"}
                     a("http://127.0.0.1:50000/pcbooth"){+"PCbooth Dashboard"}
                     br{}
                     br{}
@@ -168,7 +168,10 @@ fun Application.configureRouting() {
                 }
                 body {
                     h1{+"展厅电源控制"}
-                    a("http://127.0.0.1:50000/powerUpAllDevices"){+"一键开启展厅所有电源"}
+                    p(){+"机房时序电源可以手动开"}
+                    p(){+"展厅的灯光也可以手动开"}
+                    a("http://127.0.0.1:50000/powerUpAllDevices"){+"一键开启展厅其余设备"}
+                    p(){+"用米家App开启剩余显示屏"}
 
                 }
             }
