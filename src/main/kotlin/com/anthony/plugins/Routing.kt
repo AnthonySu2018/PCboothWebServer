@@ -2,6 +2,7 @@ package com.anthony.plugins
 
 import com.anthony.Connection
 import com.anthony.TaskList
+import com.anthony.powerUpAllDevices
 import com.sioux.anthony.androidapp.homepage.sendUDP
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.http.*
@@ -42,8 +43,6 @@ fun Application.configureRouting() {
     }
 
 
-
-
     routing {
         val connections = Collections.synchronizedSet<Connection?>(LinkedHashSet())
         var task ="noTask"
@@ -81,15 +80,15 @@ fun Application.configureRouting() {
                 }
                 body {
                     h1{+"This web server is design by Anthony"}
-                    h2{+"Data:2024-02-06"}
-                    h2{+"Version:2.1.0"}
-                    a("http://172.18.1.232:50000/pcbooth"){+"PCbooth Dashboard"}
+                    h2{+"Data:2024-02-18"}
+                    h2{+"Version:2.1.1"}
+                    a("http://127.0.0.1:50000/pcbooth"){+"PCbooth Dashboard"}
                     br{}
                     br{}
-                    a("http://172.18.1.232:50000/ChangePicture"){+"ChangePicture Dashboard"}
+                    a("http://127.0.0.1:50000/ChangePicture"){+"ChangePicture Dashboard"}
                     br{}
                     br{}
-                    a("http://172.18.1.232:50000/PowerSupply"){+"PowerSupply Dashboard"}
+                    a("http://127.0.0.1:50000/PowerSupply"){+"PowerSupply Dashboard"}
                 }
             }
         }
@@ -120,13 +119,13 @@ fun Application.configureRouting() {
                 }
                 body {
                     h1{+"更换图片后，重启播放盒子"}
-                    a("http://172.18.1.232:50000/rebootPrefaceHallBigScreen"){+"重启序厅LCD大屏"}
+                    a("http://127.0.0.1:50000/rebootPrefaceHallBigScreen"){+"重启序厅LCD大屏"}
                     br{}
                     br{}
-                    a("http://172.18.1.232:50000/rebootPrefaceHallSmallScreen"){+"重启序厅工控屏"}
+                    a("http://127.0.0.1:50000/rebootPrefaceHallSmallScreen"){+"重启序厅工控屏"}
                     br{}
                     br{}
-                    a("http://172.18.1.232:50000/rebootBackdoorOuterScreen"){+"重启后面厅外大屏"}
+                    a("http://127.0.0.1:50000/rebootBackdoorOuterScreen"){+"重启后面厅外大屏"}
 
                 }
             }
@@ -169,10 +168,15 @@ fun Application.configureRouting() {
                 }
                 body {
                     h1{+"展厅电源控制"}
-
+                    a("http://127.0.0.1:50000/powerUpAllDevices"){+"一键开启展厅所有电源"}
 
                 }
             }
+        }
+
+        get("/powerUpAllDevices"){
+            powerUpAllDevices()
+            call.respondRedirect("/PowerSupply")
         }
 
 
@@ -217,3 +221,4 @@ fun Application.configureRouting() {
 
     }
 }
+
