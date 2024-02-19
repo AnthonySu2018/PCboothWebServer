@@ -80,8 +80,8 @@ fun Application.configureRouting() {
                 }
                 body {
                     h1{+"This web server is design by Anthony"}
-                    h2{+"Data:2024-02-18"}
-                    h2{+"Version:2.2.0"}
+                    h2{+"Data:2024-02-19"}
+                    h2{+"Version:2.4.0"}
                     a("http://127.0.0.1:50000/pcbooth"){+"PCbooth Dashboard"}
                     br{}
                     br{}

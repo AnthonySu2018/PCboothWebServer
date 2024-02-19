@@ -15,4 +15,5 @@ fun sendTCPHEXStr(remoteHost:String,remotePort:Int,action:String){
         outputStream.write(outputData)
         outputStream.flush() // 确保数据发送
     }
+    println("数据已发送。")
 }
